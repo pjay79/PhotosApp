@@ -15,10 +15,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonText: {
-    color: 'white',
+    color: 'lightseagreen',
     fontSize: 16,
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontWeight: '900',
     letterSpacing: 2,
   },
 });

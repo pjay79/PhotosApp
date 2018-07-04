@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  Text, Image, StyleSheet, SafeAreaView,
+} from 'react-native';
 import Button from '../components/Button';
 
 export default class HomeScreen extends Component {
@@ -11,16 +13,17 @@ export default class HomeScreen extends Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.title}>
 Photos App
         </Text>
+        <Image source={require('../assets/images/photo.png')} style={styles.image} />
         <Button
           title="START"
           onPress={() => navigation.navigate('App')}
           style={{ backgroundColor: 'black' }}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -28,13 +31,18 @@ Photos App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'lightseagreen',
   },
   title: {
-    color: 'white',
-    fontSize: 54,
+    color: 'black',
+    fontSize: 44,
+    fontWeight: '900',
+  },
+  image: {
+    height: 200,
+    width: 200,
   },
 });
 

@@ -36,11 +36,7 @@ export default class PhotosScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          title="View Photos"
-          style={{ backgroundColor: 'lightseagreen' }}
-          onPress={this.getPhotos}
-        />
+        <Button title="View Photos" style={{ backgroundColor: 'black' }} onPress={this.getPhotos} />
       </View>
     );
   }
@@ -49,7 +45,7 @@ export default class PhotosScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
 });
