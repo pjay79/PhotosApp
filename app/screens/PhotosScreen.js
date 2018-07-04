@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, CameraRoll } from 'react-native';
+import Button from '../components/Button';
 
 export default class PhotosScreen extends Component {
   static navigationOptions = {
@@ -9,12 +10,37 @@ export default class PhotosScreen extends Component {
     },
   };
 
+  state = {
+    photos: [],
+  };
+
+  getPhotos = () => {
+    CameraRoll.getPhotos({ first: 20, assetType: 'All' }).then(
+      (result) => {
+        this.setState(
+          {
+            photos: result.edges,
+          },
+          () => {
+            const { photos } = this.state;
+            console.log(photos);
+          },
+        );
+      },
+      (error) => {
+        console.log(error.message);
+      },
+    );
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>
-Photos Screen
-        </Text>
+        <Button
+          title="View Photos"
+          style={{ backgroundColor: 'lightseagreen' }}
+          onPress={this.getPhotos}
+        />
       </View>
     );
   }

@@ -15,7 +15,10 @@
     "es6": true
   },
   "rules": {
-    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".js", ".jsx"] }
+    ],
     "global-require": "off",
     "no-console": 0,
     "no-use-before-define": 0

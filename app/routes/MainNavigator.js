@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Platform } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
@@ -14,9 +15,13 @@ import HomeScreen from '../screens/HomeScreen';
 import PhotosScreen from '../screens/PhotosScreen';
 import BrowseScreen from '../screens/BrowseScreen';
 
-const PhotosIcon = ({ tintColor }) => <Ionicons name="ios-photos" size={20} color={tintColor} />;
+const PhotosIcon = ({ tintColor }) => (
+  <Ionicons name={Platform.OS === 'ios' ? 'ios-photos' : 'md-photos'} size={20} color={tintColor} />
+);
 
-const BrowseIcon = ({ tintColor }) => <Ionicons name="ios-search" size={20} color={tintColor} />;
+const BrowseIcon = ({ tintColor }) => (
+  <Ionicons name={Platform.OS === 'ios' ? 'ios-search' : 'md-search'} size={20} color={tintColor} />
+);
 
 const PhotosStack = createStackNavigator(
   {
