@@ -22,10 +22,25 @@ export default class PhotosScreen extends Component {
 
   state = {
     photos: [],
+    index: null,
+  };
+
+  componentDidMount() {
+    this.getPhotos();
+  }
+
+  setIndex = (i) => {
+    const { index } = this.state;
+    if (i === index) {
+      /* eslint-disable no-param-reassign */
+      i = null;
+      /* eslint-enable no-param-reassign */
+    }
+    this.setState({ index: i });
   };
 
   getPhotos = () => {
-    CameraRoll.getPhotos({ first: 50, assetType: 'All' }).then(
+    CameraRoll.getPhotos({ first: 50 }).then(
       (result) => {
         this.setState(
           {
@@ -44,14 +59,16 @@ export default class PhotosScreen extends Component {
   };
 
   render() {
-    const { photos } = this.state;
+    const { photos, index } = this.state;
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           {photos.map((p, i) => (
             <TouchableHighlight
-              style={{ opacity: i === this.state.index ? 0.5 : 1 }}
+              style={{ opacity: i === index ? 0.5 : 1 }}
+              /* eslint-disable react/no-array-index-key */
               key={i}
+              /* eslint-enable react/no-array-index-key */
               underlayColor="transparent"
               onPress={() => this.setIndex(i)}
             >
