@@ -8,6 +8,8 @@ import {
   CameraRoll,
   Dimensions,
 } from 'react-native';
+import Share from 'react-native-share';
+import RNFetchBlob from 'react-native-fetch-blob';
 import Button from '../components/Button';
 
 const { width } = Dimensions.get('window');
@@ -58,6 +60,24 @@ export default class PhotosScreen extends Component {
     );
   };
 
+  share = () => {
+    const { photos, index } = this.state;
+    if (index !== null) {
+      const image = photos[index].node.image.uri;
+      RNFetchBlob.fs.readFile(image, 'base64').then((data) => {
+        const shareOptions = {
+          title: 'React Native Share Example',
+          message: 'Check out this photo!',
+          url: `data:image/jpg;base64,${data}`,
+          subject: 'Check out this photo!',
+        };
+        Share.open(shareOptions)
+          .then(res => console.log('res:', res))
+          .catch(err => console.log('err', err));
+      });
+    }
+  };
+
   render() {
     const { photos, index } = this.state;
     return (
@@ -77,6 +97,7 @@ export default class PhotosScreen extends Component {
           ))}
         </ScrollView>
         <Button title="View Photos" style={{ backgroundColor: 'black' }} onPress={this.getPhotos} />
+        <Button title="Share Photos" style={{ backgroundColor: 'lightseagreen', marginTop: 0}} textStyle={{ color: 'black' }} onPress={this.share} />
       </View>
     );
   }

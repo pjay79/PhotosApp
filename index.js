@@ -5,6 +5,7 @@ YellowBox.ignoreWarnings([
   'Class RCTCxxModule',
   'RCTBridge',
   'Module RCTImageLoader',
+  'Module RNFetchBlob requires main queue setup',
   'Warning: isMounted(...)',
 ]);
 

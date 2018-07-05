@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonText: {
-    color: 'lightseagreen',
+    color: 'white',
     fontSize: 16,
     textAlign: 'center',
     fontWeight: '900',
