@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, TouchableOpacity, StyleSheet, Platform,
+  View, TouchableOpacity, StyleSheet, CameraRoll, Platform,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -15,8 +15,9 @@ export default class BrowseScreen extends Component {
 
   takePicture = async () => {
     if (this.camera) {
-      const options = { quality: 0.5, base64: true };
+      const options = { quality: 0.5, base64: true, forceUpOrientation: true };
       const data = await this.camera.takePictureAsync(options);
+      CameraRoll.saveToCameraRoll(data.uri);
       console.log(data.uri);
     }
   };
@@ -34,7 +35,7 @@ export default class BrowseScreen extends Component {
           permissionDialogTitle="Permission to use camera"
           permissionDialogMessage="We need your permission to use your camera phone"
         >
-          <TouchableOpacity onPress={this.takePicture} style={styles.button}>
+          <TouchableOpacity onPress={this.takePicture} style={styles.addButton}>
             <Ionicons
               name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'}
               size={40}
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  button: {
+  addButton: {
     marginBottom: 10,
   },
 });
