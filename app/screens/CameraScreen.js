@@ -14,21 +14,19 @@ export default class BrowseScreen extends Component {
   };
 
   state = {
-    camera: {
-      back: true,
-      flash: false,
-    },
+    cameraBack: true,
+    cameraFlash: false,
   };
 
   toggleType = () => {
     this.setState(prevState => ({
-      camera: { back: !prevState.camera.back },
+      cameraBack: !prevState.cameraBack,
     }));
   };
 
   toggleFlash = () => {
     this.setState(prevState => ({
-      camera: { flash: !prevState.camera.flash },
+      cameraFlash: !prevState.cameraFlash,
     }));
   };
 
@@ -42,7 +40,7 @@ export default class BrowseScreen extends Component {
   };
 
   render() {
-    const { camera } = this.state;
+    const { cameraBack, cameraFlash } = this.state;
     return (
       <View style={styles.container}>
         <RNCamera
@@ -50,9 +48,9 @@ export default class BrowseScreen extends Component {
             this.camera = ref;
           }}
           style={styles.preview}
-          type={camera.back ? RNCamera.Constants.Type.back : RNCamera.Constants.Type.front}
+          type={cameraBack ? RNCamera.Constants.Type.back : RNCamera.Constants.Type.front}
           flashMode={
-            camera.flash ? RNCamera.Constants.FlashMode.on : RNCamera.Constants.FlashMode.off
+            cameraFlash ? RNCamera.Constants.FlashMode.on : RNCamera.Constants.FlashMode.off.on
           }
           permissionDialogTitle="Permission to use camera"
           permissionDialogMessage="We need your permission to use your camera phone"
