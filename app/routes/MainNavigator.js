@@ -13,14 +13,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // import IntroScreen from '../screens/IntroScreen';
 import HomeScreen from '../screens/HomeScreen';
 import PhotosScreen from '../screens/PhotosScreen';
-import BrowseScreen from '../screens/BrowseScreen';
+import CameraScreen from '../screens/CameraScreen';
 
 const PhotosIcon = ({ tintColor }) => (
   <Ionicons name={Platform.OS === 'ios' ? 'ios-photos' : 'md-photos'} size={20} color={tintColor} />
 );
 
-const BrowseIcon = ({ tintColor }) => (
-  <Ionicons name={Platform.OS === 'ios' ? 'ios-search' : 'md-search'} size={20} color={tintColor} />
+const CameraIcon = ({ tintColor }) => (
+  <Ionicons name={Platform.OS === 'ios' ? 'ios-camera' : 'md-camera'} size={30} color={tintColor} />
 );
 
 const PhotosStack = createStackNavigator(
@@ -38,28 +38,28 @@ PhotosStack.navigationOptions = {
   tabBarIcon: PhotosIcon,
 };
 
-const BrowseStack = createStackNavigator(
+const CameraStack = createStackNavigator(
   {
-    Browse: {
-      screen: BrowseScreen,
+    Camera: {
+      screen: CameraScreen,
     },
   },
   {
-    inititalRouteName: 'Browse',
+    inititalRouteName: 'Camera',
   },
 );
 
-BrowseStack.navigationOptions = {
-  tabBarIcon: BrowseIcon,
+CameraStack.navigationOptions = {
+  tabBarIcon: CameraIcon,
 };
 
 const PhotosTabs = createBottomTabNavigator(
   {
-    PhotosStack: {
+    Photos: {
       screen: PhotosStack,
     },
-    BrowseStack: {
-      screen: BrowseStack,
+    Camera: {
+      screen: CameraStack,
     },
   },
   {
@@ -111,6 +111,6 @@ PhotosIcon.propTypes = {
   tintColor: PropTypes.string.isRequired,
 };
 
-BrowseIcon.propTypes = {
+CameraIcon.propTypes = {
   tintColor: PropTypes.string.isRequired,
 };

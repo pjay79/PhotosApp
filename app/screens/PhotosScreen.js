@@ -7,6 +7,7 @@ import {
   StyleSheet,
   CameraRoll,
   Dimensions,
+  Alert,
 } from 'react-native';
 import Share from 'react-native-share';
 import RNFetchBlob from 'react-native-fetch-blob';
@@ -75,6 +76,13 @@ export default class PhotosScreen extends Component {
           .then(res => console.log('res:', res))
           .catch(err => console.log('err', err));
       });
+    } else {
+      Alert.alert(
+        'Oops',
+        'Please select a photo',
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false },
+      );
     }
   };
 
@@ -96,8 +104,7 @@ export default class PhotosScreen extends Component {
             </TouchableHighlight>
           ))}
         </ScrollView>
-        <Button title="View Photos" style={{ backgroundColor: 'black' }} onPress={this.getPhotos} />
-        <Button title="Share Photos" style={{ backgroundColor: 'lightseagreen', marginTop: 0}} textStyle={{ color: 'black' }} onPress={this.share} />
+        <Button title="Share Photos" style={{ backgroundColor: 'black' }} onPress={this.share} />
       </View>
     );
   }
@@ -118,7 +125,5 @@ const styles = StyleSheet.create({
   image: {
     width: width / 3,
     height: width / 3,
-    borderColor: 'lightseagreen',
-    borderWidth: 1,
   },
 });
