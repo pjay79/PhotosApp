@@ -14,13 +14,22 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import PhotosScreen from '../screens/PhotosScreen';
 import CameraScreen from '../screens/CameraScreen';
+import UploadsScreen from '../screens/UploadsScreen';
 
 const PhotosIcon = ({ tintColor }) => (
   <Ionicons name={Platform.OS === 'ios' ? 'ios-photos' : 'md-photos'} size={20} color={tintColor} />
 );
 
 const CameraIcon = ({ tintColor }) => (
-  <Ionicons name={Platform.OS === 'ios' ? 'ios-camera' : 'md-camera'} size={30} color={tintColor} />
+  <Ionicons name={Platform.OS === 'ios' ? 'ios-camera' : 'md-camera'} size={25} color={tintColor} />
+);
+
+const UploadsIcon = ({ tintColor }) => (
+  <Ionicons
+    name={Platform.OS === 'ios' ? 'ios-cloud-upload' : 'md-cloud-upload'}
+    size={25}
+    color={tintColor}
+  />
 );
 
 const PhotosStack = createStackNavigator(
@@ -53,6 +62,21 @@ CameraStack.navigationOptions = {
   tabBarIcon: CameraIcon,
 };
 
+const UploadsStack = createStackNavigator(
+  {
+    Uploads: {
+      screen: UploadsScreen,
+    },
+  },
+  {
+    inititalRouteName: 'Uploads',
+  },
+);
+
+UploadsStack.navigationOptions = {
+  tabBarIcon: UploadsIcon,
+};
+
 const PhotosTabs = createBottomTabNavigator(
   {
     Photos: {
@@ -60,6 +84,9 @@ const PhotosTabs = createBottomTabNavigator(
     },
     Camera: {
       screen: CameraStack,
+    },
+    Uploads: {
+      screen: UploadsStack,
     },
   },
   {
@@ -112,5 +139,9 @@ PhotosIcon.propTypes = {
 };
 
 CameraIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
+};
+
+UploadsIcon.propTypes = {
   tintColor: PropTypes.string.isRequired,
 };

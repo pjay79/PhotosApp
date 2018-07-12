@@ -13,6 +13,25 @@ export default class BrowseScreen extends Component {
     },
   };
 
+  state = {
+    camera: {
+      back: true,
+      flash: false,
+    },
+  };
+
+  toggleType = () => {
+    this.setState(prevState => ({
+      camera: { back: !prevState.camera.back },
+    }));
+  };
+
+  toggleFlash = () => {
+    this.setState(prevState => ({
+      camera: { flash: !prevState.camera.flash },
+    }));
+  };
+
   takePicture = async () => {
     if (this.camera) {
       const options = { quality: 0.5, base64: true, forceUpOrientation: true };
@@ -23,6 +42,7 @@ export default class BrowseScreen extends Component {
   };
 
   render() {
+    const { camera } = this.state;
     return (
       <View style={styles.container}>
         <RNCamera
@@ -30,18 +50,39 @@ export default class BrowseScreen extends Component {
             this.camera = ref;
           }}
           style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.on}
+          type={camera.back ? RNCamera.Constants.Type.back : RNCamera.Constants.Type.front}
+          flashMode={
+            camera.flash ? RNCamera.Constants.FlashMode.on : RNCamera.Constants.FlashMode.off
+          }
           permissionDialogTitle="Permission to use camera"
           permissionDialogMessage="We need your permission to use your camera phone"
         >
-          <TouchableOpacity onPress={this.takePicture} style={styles.addButton}>
-            <Ionicons
-              name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'}
-              size={40}
-              color="white"
-            />
-          </TouchableOpacity>
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity onPress={this.toggleType}>
+              <Ionicons
+                name={Platform.OS === 'ios' ? 'ios-reverse-camera' : 'md-reverse-camera'}
+                size={30}
+                color="white"
+                style={styles.button}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.takePicture}>
+              <Ionicons
+                name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'}
+                size={30}
+                color="white"
+                style={styles.button}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.toggleFlash}>
+              <Ionicons
+                name={Platform.OS === 'ios' ? 'ios-flash' : 'md-flash'}
+                size={30}
+                color="white"
+                style={styles.button}
+              />
+            </TouchableOpacity>
+          </View>
         </RNCamera>
       </View>
     );
@@ -57,7 +98,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  addButton: {
+  button: {
+    marginHorizontal: 20,
+  },
+  buttonGroup: {
+    flexDirection: 'row',
     marginBottom: 10,
   },
 });
