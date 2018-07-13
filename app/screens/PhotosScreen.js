@@ -10,11 +10,13 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import { Storage } from 'aws-amplify';
 import Share from 'react-native-share';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 import Button from '../components/Button';
 
 const { width } = Dimensions.get('window');
+if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer;
 
 export default class PhotosScreen extends Component {
   static navigationOptions = {
@@ -46,14 +48,14 @@ export default class PhotosScreen extends Component {
 
   getPhotos = () => {
     this.setState({ loading: true });
-    CameraRoll.getPhotos({ first: 50 }).then(
+    CameraRoll.getPhotos({ first: 45 }).then(
       (result) => {
         this.setState(
           {
             photos: result.edges,
+            loading: false,
           },
           () => {
-            this.setState({ loading: false });
             const { photos } = this.state;
             console.log(photos);
           },
@@ -69,8 +71,8 @@ export default class PhotosScreen extends Component {
   share = () => {
     const { photos, index } = this.state;
     if (index !== null) {
-      const image = photos[index].node.image.uri;
-      RNFetchBlob.fs.readFile(image, 'base64').then((data) => {
+      const { uri } = photos[index].node.image;
+      RNFetchBlob.fs.readFile(uri, 'base64').then((data) => {
         const shareOptions = {
           title: 'React Native Share Example',
           message: 'Check out this photo!',
@@ -78,8 +80,8 @@ export default class PhotosScreen extends Component {
           subject: 'Check out this photo!',
         };
         Share.open(shareOptions)
-          .then(res => console.log('res:', res))
-          .catch(err => console.log('err', err));
+          .then(result => console.log('Result:', result))
+          .catch(error => console.log('Rrr', error.message));
       });
     } else {
       Alert.alert(
@@ -88,6 +90,34 @@ export default class PhotosScreen extends Component {
         [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
         { cancelable: false },
       );
+    }
+  };
+
+  upload = () => {
+    const { photos, index } = this.state;
+    if (index !== null) {
+      const { uri } = photos[index].node.image;
+      const key = `Photo added on ${new Date()}.jpeg`;
+      this.uploadImageToS3(uri, key);
+    } else {
+      Alert.alert(
+        'Oops',
+        'Please select a photo',
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false },
+      );
+    }
+  };
+
+  uploadImageToS3 = async (uri, key) => {
+    try {
+      const file = await RNFetchBlob.fs.readFile(uri, 'base64');
+      const buffer = await Buffer.from(file, 'base64');
+      Storage.put(key, buffer, {
+        contentType: 'image/jpeg',
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -115,6 +145,7 @@ export default class PhotosScreen extends Component {
           ))}
         </ScrollView>
         <Button title="Share Photos" style={{ backgroundColor: 'black' }} onPress={this.share} />
+        <Button title="Upload Photos" style={{ backgroundColor: 'black' }} onPress={this.upload} />
       </View>
     );
   }

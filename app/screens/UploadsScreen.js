@@ -73,7 +73,7 @@ export default class UploadsScreen extends Component {
             </TouchableHighlight>
           ))}
         </ScrollView>
-        <Button title="Share Uploads" style={{ backgroundColor: 'black' }} onPress={() => {}} />
+        <Button title="Save Photos" style={{ backgroundColor: 'black' }} onPress={() => {}} />
       </View>
     );
   }
