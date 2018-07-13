@@ -8,6 +8,7 @@ import {
   CameraRoll,
   Dimensions,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import Share from 'react-native-share';
 import RNFetchBlob from 'react-native-fetch-blob';
@@ -26,6 +27,7 @@ export default class PhotosScreen extends Component {
   state = {
     photos: [],
     index: null,
+    loading: false,
   };
 
   componentDidMount() {
@@ -43,6 +45,7 @@ export default class PhotosScreen extends Component {
   };
 
   getPhotos = () => {
+    this.setState({ loading: true });
     CameraRoll.getPhotos({ first: 50 }).then(
       (result) => {
         this.setState(
@@ -50,12 +53,14 @@ export default class PhotosScreen extends Component {
             photos: result.edges,
           },
           () => {
+            this.setState({ loading: false });
             const { photos } = this.state;
             console.log(photos);
           },
         );
       },
       (error) => {
+        this.setState({ loading: false });
         console.log(error.message);
       },
     );
@@ -87,9 +92,10 @@ export default class PhotosScreen extends Component {
   };
 
   render() {
-    const { photos, index } = this.state;
+    const { photos, index, loading } = this.state;
     return (
       <View style={styles.container}>
+        {loading && <ActivityIndicator size="small" />}
         <ScrollView contentContainerStyle={styles.scrollView}>
           {photos.map((p, i) => (
             <TouchableHighlight
@@ -113,7 +119,7 @@ export default class PhotosScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   scrollView: {
