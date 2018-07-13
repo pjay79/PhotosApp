@@ -95,8 +95,12 @@ export default class PhotosScreen extends Component {
     const { photos, index, loading } = this.state;
     return (
       <View style={styles.container}>
-        {loading && <ActivityIndicator size="small" />}
         <ScrollView contentContainerStyle={styles.scrollView}>
+          {loading && (
+            <View style={styles.spinner}>
+              <ActivityIndicator size="small" />
+            </View>
+          )}
           {photos.map((p, i) => (
             <TouchableHighlight
               style={{ opacity: i === index ? 0.5 : 1 }}
@@ -121,6 +125,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  spinner: {
+    marginTop: 10,
   },
   scrollView: {
     justifyContent: 'center',
