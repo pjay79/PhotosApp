@@ -8,6 +8,7 @@ import {
   Dimensions,
   Alert,
 } from 'react-native';
+import { Storage } from 'aws-amplify';
 import Button from '../components/Button';
 
 const { width } = Dimensions.get('window');
@@ -39,7 +40,11 @@ export default class UploadsScreen extends Component {
     this.setState({ index: i });
   };
 
-  getUploads = () => {};
+  getUploads = async () => {
+    await Storage.list('')
+      .then(result => console.log(result))
+      .catch(error => console.log(error.message));
+  };
 
   save = () => {
     const { index } = this.state;
