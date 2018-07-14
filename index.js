@@ -9,4 +9,6 @@ YellowBox.ignoreWarnings([
   'Warning: isMounted(...)',
 ]);
 
+global.Buffer = require('buffer').Buffer;
+
 AppRegistry.registerComponent('PhotosApp', () => App);

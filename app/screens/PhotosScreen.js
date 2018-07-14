@@ -16,7 +16,6 @@ import RNFetchBlob from 'rn-fetch-blob';
 import Button from '../components/Button';
 
 const { width } = Dimensions.get('window');
-if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer;
 
 export default class PhotosScreen extends Component {
   static navigationOptions = {
@@ -30,6 +29,7 @@ export default class PhotosScreen extends Component {
     photos: [],
     index: null,
     loading: false,
+    uploading: false,
   };
 
   componentDidMount() {
@@ -111,18 +111,23 @@ export default class PhotosScreen extends Component {
 
   uploadImageToS3 = async (uri, key) => {
     try {
+      this.setState({ uploading: true });
       const file = await RNFetchBlob.fs.readFile(uri, 'base64');
       const buffer = await Buffer.from(file, 'base64');
       Storage.put(key, buffer, {
         contentType: 'image/jpeg',
       });
+      this.setState({ uploading: false });
     } catch (error) {
+      this.setState({ uploading: false });
       console.log(error.message);
     }
   };
 
   render() {
-    const { photos, index, loading } = this.state;
+    const {
+      photos, index, loading, uploading,
+    } = this.state;
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -144,8 +149,12 @@ export default class PhotosScreen extends Component {
             </TouchableHighlight>
           ))}
         </ScrollView>
-        <Button title="Share Photos" style={{ backgroundColor: 'black' }} onPress={this.share} />
-        <Button title="Upload Photos" style={{ backgroundColor: 'black' }} onPress={this.upload} />
+        <Button title="Share Photo" style={{ backgroundColor: 'black' }} onPress={this.share} />
+        {uploading ? (
+          <Button title="Uploading..." style={{ backgroundColor: 'black' }} onPress={this.upload} />
+        ) : (
+          <Button title="Upload Photo" style={{ backgroundColor: 'black' }} onPress={this.upload} />
+        )}
       </View>
     );
   }
