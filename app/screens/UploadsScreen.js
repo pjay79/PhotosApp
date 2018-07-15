@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import {
-  View, Image, StyleSheet, Alert, ActivityIndicator,
+  View,
+  Image,
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+  TouchableHighlight,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import { Storage } from 'aws-amplify';
 import Button from '../components/Button';
+import s3Url from '../config/s3';
+
+const { width } = Dimensions.get('window');
 
 export default class UploadsScreen extends Component {
   static navigationOptions = {
@@ -14,15 +24,13 @@ export default class UploadsScreen extends Component {
   };
 
   state = {
-    // uploads: [],
-    index: null,
-    url: '',
     loading: false,
+    index: null,
+    uploads: [],
   };
 
   componentDidMount() {
-    // this.getUploads();
-    this.getFile();
+    this.getUploads();
   }
 
   setIndex = (i) => {
@@ -35,25 +43,17 @@ export default class UploadsScreen extends Component {
     this.setState({ index: i });
   };
 
-  getFile = async () => {
-    this.setState({ loading: true });
-    const name = 'example-image.png';
-    const fileUrl = await Storage.get(name);
-    this.setState({
-      url: fileUrl,
-      loading: false,
-    });
+  getUploads = async () => {
+    try {
+      this.setState({ loading: true });
+      const result = await Storage.list('');
+      this.setState({ uploads: result, loading: false });
+      console.log(result);
+    } catch (error) {
+      this.setState({ loading: false });
+      console.log(error.message);
+    }
   };
-
-  // getUploads = async () => {
-  //   try {
-  //     const result = await Storage.list('');
-  //     this.setState({ uploads: result });
-  //     console.log(result);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
 
   savePhoto = () => {
     const { index } = this.state;
@@ -72,19 +72,30 @@ export default class UploadsScreen extends Component {
   deletPhoto = () => {};
 
   render() {
-    const { url, loading } = this.state;
+    const { uploads, index, loading } = this.state;
     return (
       <View style={styles.container}>
         {loading && (
-          <View>
+          <View style={styles.spinner}>
             <ActivityIndicator size="small" />
           </View>
         )}
-        {url !== '' && <Image source={{ uri: url }} style={{ width: 300, height: 300 }} />}
-        <View>
-          <Button title="Save Photo" style={{ backgroundColor: 'black' }} onPress={() => {}} />
-          <Button title="Delete Photo" style={{ backgroundColor: 'black' }} onPress={() => {}} />
-        </View>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          {uploads.map((u, i) => (
+            <TouchableHighlight
+              style={{ opacity: i === index ? 0.5 : 1 }}
+              /* eslint-disable react/no-array-index-key */
+              key={i}
+              /* eslint-enable react/no-array-index-key */
+              underlayColor="transparent"
+              onPress={() => this.setIndex(i)}
+            >
+              <Image style={styles.image} source={{ uri: s3Url + u.key }} />
+            </TouchableHighlight>
+          ))}
+        </ScrollView>
+        <Button title="Save Photo" style={{ backgroundColor: 'black' }} onPress={() => {}} />
+        <Button title="Delete Photo" style={{ backgroundColor: 'black' }} onPress={() => {}} />
       </View>
     );
   }
@@ -93,8 +104,9 @@ export default class UploadsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  spinner: {
     paddingTop: 10,
   },
   scrollView: {
@@ -102,5 +114,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexWrap: 'wrap',
     flexDirection: 'row',
+  },
+  image: {
+    width: width / 3,
+    height: width / 3,
   },
 });

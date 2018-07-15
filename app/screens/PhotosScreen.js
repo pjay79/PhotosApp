@@ -46,26 +46,16 @@ export default class PhotosScreen extends Component {
     this.setState({ index: i });
   };
 
-  getPhotos = () => {
-    this.setState({ loading: true });
-    CameraRoll.getPhotos({ first: 45 }).then(
-      (result) => {
-        this.setState(
-          {
-            photos: result.edges,
-            loading: false,
-          },
-          () => {
-            const { photos } = this.state;
-            console.log(photos);
-          },
-        );
-      },
-      (error) => {
-        this.setState({ loading: false });
-        console.log(error.message);
-      },
-    );
+  getPhotos = async () => {
+    try {
+      this.setState({ loading: true });
+      const result = await CameraRoll.getPhotos({ first: 45 });
+      this.setState({ photos: result.edges, loading: false });
+      console.log(result.edges);
+    } catch (error) {
+      this.setState({ loading: false });
+      console.log(error.message);
+    }
   };
 
   sharePhoto = () => {
@@ -129,12 +119,12 @@ export default class PhotosScreen extends Component {
     } = this.state;
     return (
       <View style={styles.container}>
+        {loading && (
+          <View style={styles.spinner}>
+            <ActivityIndicator size="small" />
+          </View>
+        )}
         <ScrollView contentContainerStyle={styles.scrollView}>
-          {loading && (
-            <View style={styles.spinner}>
-              <ActivityIndicator size="small" />
-            </View>
-          )}
           {photos.map((p, i) => (
             <TouchableHighlight
               style={{ opacity: i === index ? 0.5 : 1 }}
@@ -148,11 +138,19 @@ export default class PhotosScreen extends Component {
             </TouchableHighlight>
           ))}
         </ScrollView>
-        <Button title="Share Photo" style={{ backgroundColor: 'black' }} onPress={this.sharePhoto} />
+        <Button
+          title="Share Photo"
+          style={{ backgroundColor: 'black' }}
+          onPress={this.sharePhoto}
+        />
         {uploading ? (
           <Button title="Uploading..." style={{ backgroundColor: 'black' }} onPress={() => {}} />
         ) : (
-          <Button title="Upload Photo" style={{ backgroundColor: 'black' }} onPress={this.uploadPhoto} />
+          <Button
+            title="Upload Photo"
+            style={{ backgroundColor: 'black' }}
+            onPress={this.uploadPhoto}
+          />
         )}
       </View>
     );
@@ -162,7 +160,7 @@ export default class PhotosScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   spinner: {
