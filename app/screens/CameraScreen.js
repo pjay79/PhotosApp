@@ -35,7 +35,6 @@ export default class BrowseScreen extends Component {
       const options = { quality: 0.5, base64: true, forceUpOrientation: true };
       const data = await this.camera.takePictureAsync(options);
       CameraRoll.saveToCameraRoll(data.uri);
-      console.log(data.uri);
     }
   };
 

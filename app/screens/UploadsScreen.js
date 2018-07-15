@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import {
-  ScrollView,
-  View,
-  Image,
-  TouchableHighlight,
-  StyleSheet,
-  Dimensions,
-  Alert,
+  View, Image, StyleSheet, Alert, ActivityIndicator,
 } from 'react-native';
 import { Storage } from 'aws-amplify';
 import Button from '../components/Button';
-
-const { width } = Dimensions.get('window');
 
 export default class UploadsScreen extends Component {
   static navigationOptions = {
@@ -22,12 +14,15 @@ export default class UploadsScreen extends Component {
   };
 
   state = {
-    uploads: [],
+    // uploads: [],
     index: null,
+    url: '',
+    loading: false,
   };
 
   componentDidMount() {
-    this.getUploads();
+    // this.getUploads();
+    this.getFile();
   }
 
   setIndex = (i) => {
@@ -40,16 +35,30 @@ export default class UploadsScreen extends Component {
     this.setState({ index: i });
   };
 
-  getUploads = async () => {
-    await Storage.list('')
-      .then(result => console.log(result))
-      .catch(error => console.log(error.message));
+  getFile = async () => {
+    this.setState({ loading: true });
+    const name = 'example-image.png';
+    const fileUrl = await Storage.get(name);
+    this.setState({
+      url: fileUrl,
+      loading: false,
+    });
   };
 
-  save = () => {
+  // getUploads = async () => {
+  //   try {
+  //     const result = await Storage.list('');
+  //     this.setState({ uploads: result });
+  //     console.log(result);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
+  savePhoto = () => {
     const { index } = this.state;
     if (index !== null) {
-      console.log('File uploaded');
+      console.log('File saved');
     } else {
       Alert.alert(
         'Oops',
@@ -60,26 +69,22 @@ export default class UploadsScreen extends Component {
     }
   };
 
+  deletPhoto = () => {};
+
   render() {
-    const { uploads, index } = this.state;
+    const { url, loading } = this.state;
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          {uploads.map((p, i) => (
-            <TouchableHighlight
-              style={{ opacity: i === index ? 0.5 : 1 }}
-              /* eslint-disable react/no-array-index-key */
-              key={i}
-              /* eslint-enable react/no-array-index-key */
-              underlayColor="transparent"
-              onPress={() => this.setIndex(i)}
-            >
-              <Image style={styles.image} source={{ uri: p.node.image.uri }} />
-            </TouchableHighlight>
-          ))}
-        </ScrollView>
-        <Button title="Save Photo" style={{ backgroundColor: 'black' }} onPress={() => {}} />
-        <Button title="Delete Photo" style={{ backgroundColor: 'black' }} onPress={() => {}} />
+        {loading && (
+          <View>
+            <ActivityIndicator size="small" />
+          </View>
+        )}
+        {url !== '' && <Image source={{ uri: url }} style={{ width: 300, height: 300 }} />}
+        <View>
+          <Button title="Save Photo" style={{ backgroundColor: 'black' }} onPress={() => {}} />
+          <Button title="Delete Photo" style={{ backgroundColor: 'black' }} onPress={() => {}} />
+        </View>
       </View>
     );
   }
@@ -88,17 +93,14 @@ export default class UploadsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    paddingTop: 10,
   },
   scrollView: {
     justifyContent: 'center',
     alignItems: 'flex-start',
     flexWrap: 'wrap',
     flexDirection: 'row',
-  },
-  image: {
-    width: width / 3,
-    height: width / 3,
   },
 });

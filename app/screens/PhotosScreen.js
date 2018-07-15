@@ -68,7 +68,7 @@ export default class PhotosScreen extends Component {
     );
   };
 
-  share = () => {
+  sharePhoto = () => {
     const { photos, index } = this.state;
     if (index !== null) {
       const { uri } = photos[index].node.image;
@@ -80,8 +80,8 @@ export default class PhotosScreen extends Component {
           subject: 'Check out this photo!',
         };
         Share.open(shareOptions)
-          .then(result => console.log('Result:', result))
-          .catch(error => console.log('Rrr', error.message));
+          .then(result => console.log(result))
+          .catch(error => console.log(error.message));
       });
     } else {
       Alert.alert(
@@ -93,12 +93,11 @@ export default class PhotosScreen extends Component {
     }
   };
 
-  upload = () => {
+  uploadPhoto = () => {
     const { photos, index } = this.state;
     if (index !== null) {
-      const { uri } = photos[index].node.image;
-      const key = `Photo added on ${new Date()}.jpeg`;
-      this.uploadImageToS3(uri, key);
+      const { uri, filename } = photos[index].node.image;
+      this.uploadPhotoToS3(uri, filename);
     } else {
       Alert.alert(
         'Oops',
@@ -109,7 +108,7 @@ export default class PhotosScreen extends Component {
     }
   };
 
-  uploadImageToS3 = async (uri, key) => {
+  uploadPhotoToS3 = async (uri, key) => {
     try {
       this.setState({ uploading: true });
       const file = await RNFetchBlob.fs.readFile(uri, 'base64');
@@ -149,11 +148,11 @@ export default class PhotosScreen extends Component {
             </TouchableHighlight>
           ))}
         </ScrollView>
-        <Button title="Share Photo" style={{ backgroundColor: 'black' }} onPress={this.share} />
+        <Button title="Share Photo" style={{ backgroundColor: 'black' }} onPress={this.sharePhoto} />
         {uploading ? (
-          <Button title="Uploading..." style={{ backgroundColor: 'black' }} onPress={this.upload} />
+          <Button title="Uploading..." style={{ backgroundColor: 'black' }} onPress={() => {}} />
         ) : (
-          <Button title="Upload Photo" style={{ backgroundColor: 'black' }} onPress={this.upload} />
+          <Button title="Upload Photo" style={{ backgroundColor: 'black' }} onPress={this.uploadPhoto} />
         )}
       </View>
     );
