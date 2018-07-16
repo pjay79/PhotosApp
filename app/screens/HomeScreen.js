@@ -3,12 +3,17 @@ import React, { Component } from 'react';
 import {
   View, Text, Image, StyleSheet, SafeAreaView,
 } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 import Button from '../components/Button';
 
 export default class HomeScreen extends Component {
   static navigationOptions = {
     header: null,
   };
+
+  componentDidMount() {
+    SplashScreen.hide();
+  }
 
   render() {
     const { navigation } = this.props;
