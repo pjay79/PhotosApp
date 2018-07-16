@@ -29,7 +29,7 @@ AWS Amplify S3
         <Button
           title="START"
           onPress={() => navigation.navigate('App')}
-          style={{ backgroundColor: '#000000', marginBottom: 10 }}
+          style={{ backgroundColor: '#FF9C1E', marginBottom: 50 }}
         />
       </SafeAreaView>
     );
@@ -44,18 +44,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF3A5B',
   },
   header: {
+    marginTop: 50,
     alignItems: 'center',
   },
   title: {
-    color: '#000000',
+    color: '#FF9C1E',
     fontSize: 44,
     fontWeight: '900',
+    marginBottom: 10,
   },
   subtitle: {
     color: '#000000',
     fontSize: 14,
-    letterSpacing: 2,
-    fontWeight: '400',
+    letterSpacing: 3,
+    fontWeight: '900',
   },
   image: {
     height: 200,

@@ -92,7 +92,7 @@ const PhotosTabs = createBottomTabNavigator(
   {
     tabBarOptions: {
       activeTintColor: 'white',
-      inactiveTintColor: '#2B2CB7',
+      inactiveTintColor: '#FF9C1E',
       style: {
         backgroundColor: '#FF3A5B',
       },

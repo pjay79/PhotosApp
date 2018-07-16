@@ -173,13 +173,13 @@ export default class PhotosScreen extends Component {
           {uploading ? (
             <Button
               title="Uploading..."
-              style={{ backgroundColor: '#2B2CB7' }}
+              style={{ backgroundColor: '#FF9C1E' }}
               onPress={() => {}}
             />
           ) : (
             <Button
               title="Upload Photo"
-              style={{ backgroundColor: '#2B2CB7' }}
+              style={{ backgroundColor: '#FF9C1E' }}
               onPress={this.uploadPhoto}
             />
           )}

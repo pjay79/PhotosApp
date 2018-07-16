@@ -83,7 +83,7 @@ export default class UploadsScreen extends Component {
     }
   };
 
-  savePhoto = () => {
+  downloadPhoto = () => {
     const { uploads, index } = this.state;
     if (index !== null) {
       const uri = s3Url + uploads[index].key;
@@ -151,9 +151,9 @@ export default class UploadsScreen extends Component {
             onPress={this.sharePhoto}
           />
           <Button
-            title="Save Photo"
-            style={{ backgroundColor: '#2B2CB7' }}
-            onPress={this.savePhoto}
+            title="Download Photo"
+            style={{ backgroundColor: '#FF9C1E' }}
+            onPress={this.downloadPhoto}
           />
         </View>
       </View>
