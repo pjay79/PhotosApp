@@ -21,7 +21,13 @@ export default class PhotosScreen extends Component {
   static navigationOptions = {
     title: 'Photos',
     headerStyle: {
-      backgroundColor: 'lightseagreen',
+      backgroundColor: '#FF3A5B',
+      elevation: 0,
+      shadowOpacity: 0,
+      borderBottomWidth: 0,
+    },
+    headerTitleStyle: {
+      color: '#FFFFFF',
     },
   };
 
@@ -64,10 +70,10 @@ export default class PhotosScreen extends Component {
       const { uri } = photos[index].node.image;
       RNFetchBlob.fs.readFile(uri, 'base64').then((data) => {
         const shareOptions = {
-          title: 'React Native Share Example',
+          title: 'React Native Photos App',
           message: 'Check out this photo!',
           url: `data:image/jpg;base64,${data}`,
-          subject: 'Check out this photo!',
+          subject: 'Powered by AWS Amplify & Amazon S3.',
         };
         Share.open(shareOptions)
           .then(result => console.log(result))
@@ -121,7 +127,7 @@ export default class PhotosScreen extends Component {
       <View style={styles.container}>
         {loading && (
           <View style={styles.spinner}>
-            <ActivityIndicator size="small" />
+            <ActivityIndicator size="small" color="#2B2CB7" />
           </View>
         )}
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -138,20 +144,26 @@ export default class PhotosScreen extends Component {
             </TouchableHighlight>
           ))}
         </ScrollView>
-        <Button
-          title="Share Photo"
-          style={{ backgroundColor: 'black' }}
-          onPress={this.sharePhoto}
-        />
-        {uploading ? (
-          <Button title="Uploading..." style={{ backgroundColor: 'black' }} onPress={() => {}} />
-        ) : (
+        <View style={styles.buttonGroup}>
           <Button
-            title="Upload Photo"
-            style={{ backgroundColor: 'black' }}
-            onPress={this.uploadPhoto}
+            title="Share Photo"
+            style={{ backgroundColor: '#000000', marginTop: 5 }}
+            onPress={this.sharePhoto}
           />
-        )}
+          {uploading ? (
+            <Button
+              title="Uploading..."
+              style={{ backgroundColor: '#2B2CB7' }}
+              onPress={() => {}}
+            />
+          ) : (
+            <Button
+              title="Upload Photo"
+              style={{ backgroundColor: '#2B2CB7' }}
+              onPress={this.uploadPhoto}
+            />
+          )}
+        </View>
       </View>
     );
   }
@@ -162,6 +174,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    backgroundColor: '#FF3A5B',
   },
   spinner: {
     marginTop: 10,
@@ -171,9 +184,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexWrap: 'wrap',
     flexDirection: 'row',
+    paddingBottom: width / 3,
   },
   image: {
     width: width / 3,
     height: width / 3,
+  },
+  buttonGroup: {
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
   },
 });

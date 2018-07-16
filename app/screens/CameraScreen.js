@@ -9,7 +9,13 @@ export default class BrowseScreen extends Component {
   static navigationOptions = {
     title: 'Camera',
     headerStyle: {
-      backgroundColor: 'lightseagreen',
+      backgroundColor: '#FF3A5B',
+      elevation: 0,
+      shadowOpacity: 0,
+      borderBottomWidth: 0,
+    },
+    headerTitleStyle: {
+      color: '#FFFFFF',
     },
   };
 
