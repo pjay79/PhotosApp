@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Storage } from 'aws-amplify';
 import Button from '../components/Button';
-import s3Url from '../config/s3';
+import s3Url from '../config/s3Url';
 
 const { width } = Dimensions.get('window');
 
