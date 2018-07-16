@@ -1,9 +1,12 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   ScrollView,
   View,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
+  Platform,
   StyleSheet,
   CameraRoll,
   Dimensions,
@@ -13,12 +16,13 @@ import {
 import { Storage } from 'aws-amplify';
 import Share from 'react-native-share';
 import RNFetchBlob from 'rn-fetch-blob';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Button from '../components/Button';
 
 const { width } = Dimensions.get('window');
 
 export default class PhotosScreen extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'Photos',
     headerStyle: {
       backgroundColor: '#FF3A5B',
@@ -29,7 +33,21 @@ export default class PhotosScreen extends Component {
     headerTitleStyle: {
       color: '#FFFFFF',
     },
-  };
+    headerRight: (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.state.params.refresh();
+        }}
+      >
+        <Ionicons
+          name={Platform.OS === 'ios' ? 'ios-refresh-circle' : 'md-refresh-camera'}
+          size={25}
+          color="white"
+          style={styles.refresh}
+        />
+      </TouchableOpacity>
+    ),
+  });
 
   state = {
     photos: [],
@@ -40,6 +58,8 @@ export default class PhotosScreen extends Component {
 
   componentDidMount() {
     this.getPhotos();
+    const { navigation } = this.props;
+    navigation.setParams({ refresh: this.getPhotos });
   }
 
   setIndex = (i) => {
@@ -177,7 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF3A5B',
   },
   spinner: {
-    marginTop: 10,
+    marginVertical: 10,
   },
   scrollView: {
     justifyContent: 'center',
@@ -185,6 +205,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     paddingBottom: width / 3,
+  },
+  refresh: {
+    marginRight: 10,
   },
   image: {
     width: width / 3,
@@ -196,3 +219,9 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
 });
+
+PhotosScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};

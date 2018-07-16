@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   View,
@@ -5,20 +6,23 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
+  Platform,
   TouchableHighlight,
+  TouchableOpacity,
   ScrollView,
   Dimensions,
   CameraRoll,
 } from 'react-native';
 import { Storage } from 'aws-amplify';
 import Share from 'react-native-share';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import s3Url from '../config/s3Url';
 import Button from '../components/Button';
 
 const { width } = Dimensions.get('window');
 
 export default class UploadsScreen extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'Uploads',
     headerStyle: {
       backgroundColor: '#FF3A5B',
@@ -29,7 +33,21 @@ export default class UploadsScreen extends Component {
     headerTitleStyle: {
       color: '#FFFFFF',
     },
-  };
+    headerRight: (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.state.params.refresh();
+        }}
+      >
+        <Ionicons
+          name={Platform.OS === 'ios' ? 'ios-refresh-circle' : 'md-refresh-camera'}
+          size={25}
+          color="white"
+          style={styles.refresh}
+        />
+      </TouchableOpacity>
+    ),
+  });
 
   state = {
     loading: false,
@@ -39,6 +57,8 @@ export default class UploadsScreen extends Component {
 
   componentDidMount() {
     this.getUploads();
+    const { navigation } = this.props;
+    navigation.setParams({ refresh: this.getUploads });
   }
 
   setIndex = (i) => {
@@ -148,7 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF3A5B',
   },
   spinner: {
-    paddingTop: 10,
+    paddingVertical: 10,
   },
   scrollView: {
     justifyContent: 'center',
@@ -156,6 +176,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     paddingBottom: width / 3,
+  },
+  refresh: {
+    marginRight: 10,
   },
   image: {
     width: width / 3,
@@ -167,3 +190,9 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
 });
+
+UploadsScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
