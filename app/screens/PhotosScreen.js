@@ -25,7 +25,7 @@ export default class PhotosScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Photos',
     headerStyle: {
-      backgroundColor: '#FF3A5B',
+      backgroundColor: '#F0353D',
       elevation: 0,
       shadowOpacity: 0,
       borderBottomWidth: 0,
@@ -147,7 +147,7 @@ export default class PhotosScreen extends Component {
       <View style={styles.container}>
         {loading && (
           <View style={styles.spinner}>
-            <ActivityIndicator size="small" color="#2B2CB7" />
+            <ActivityIndicator size="small" color="#FFFFFF" />
           </View>
         )}
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -173,13 +173,13 @@ export default class PhotosScreen extends Component {
           {uploading ? (
             <Button
               title="Uploading..."
-              style={{ backgroundColor: '#FF9C1E' }}
+              style={{ backgroundColor: '#FF8C29' }}
               onPress={() => {}}
             />
           ) : (
             <Button
               title="Upload Photo"
-              style={{ backgroundColor: '#FF9C1E' }}
+              style={{ backgroundColor: '#FF8C29' }}
               onPress={this.uploadPhoto}
             />
           )}
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#FF3A5B',
+    backgroundColor: '#F0353D',
   },
   spinner: {
     marginVertical: 10,

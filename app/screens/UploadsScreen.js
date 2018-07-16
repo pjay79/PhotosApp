@@ -25,7 +25,7 @@ export default class UploadsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Uploads',
     headerStyle: {
-      backgroundColor: '#FF3A5B',
+      backgroundColor: '#F0353D',
       elevation: 0,
       shadowOpacity: 0,
       borderBottomWidth: 0,
@@ -127,7 +127,7 @@ export default class UploadsScreen extends Component {
       <View style={styles.container}>
         {loading && (
           <View style={styles.spinner}>
-            <ActivityIndicator size="small" color="#2B2CB7" />
+            <ActivityIndicator size="small" color="#FFFFFF" />
           </View>
         )}
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -152,7 +152,7 @@ export default class UploadsScreen extends Component {
           />
           <Button
             title="Download Photo"
-            style={{ backgroundColor: '#FF9C1E' }}
+            style={{ backgroundColor: '#FF8C29' }}
             onPress={this.downloadPhoto}
           />
         </View>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#FF3A5B',
+    backgroundColor: '#F0353D',
   },
   spinner: {
     paddingVertical: 10,

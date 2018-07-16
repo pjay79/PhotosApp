@@ -26,10 +26,13 @@ AWS Amplify S3
           </Text>
         </View>
         <Image source={require('../assets/images/photo.png')} style={styles.image} />
+        <Text style={styles.slogan}>
+A photo sharing and uploading app
+        </Text>
         <Button
           title="START"
           onPress={() => navigation.navigate('App')}
-          style={{ backgroundColor: '#FF9C1E', marginBottom: 50 }}
+          style={{ backgroundColor: '#000000', marginBottom: 25 }}
         />
       </SafeAreaView>
     );
@@ -41,23 +44,29 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#FF3A5B',
+    backgroundColor: '#F0353D',
   },
   header: {
-    marginTop: 50,
+    marginTop: 25,
     alignItems: 'center',
   },
   title: {
-    color: '#FF9C1E',
+    color: '#000000',
     fontSize: 44,
     fontWeight: '900',
     marginBottom: 10,
   },
   subtitle: {
-    color: '#000000',
+    color: '#FFFFFF',
     fontSize: 14,
     letterSpacing: 3,
     fontWeight: '900',
+  },
+  slogan: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'italic',
   },
   image: {
     height: 200,
