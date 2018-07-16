@@ -33,6 +33,16 @@ export default class PhotosScreen extends Component {
     headerTitleStyle: {
       color: '#FFFFFF',
     },
+    headerLeft: (
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <Ionicons
+          name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
+          size={30}
+          color="white"
+          style={{ marginLeft: 10 }}
+        />
+      </TouchableOpacity>
+    ),
     headerRight: (
       <TouchableOpacity
         onPress={() => {
