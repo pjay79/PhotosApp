@@ -1,11 +1,13 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   View, TouchableOpacity, StyleSheet, CameraRoll, Platform,
 } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 import { RNCamera } from 'react-native-camera';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default class BrowseScreen extends Component {
+class CameraScreen extends Component {
   static navigationOptions = {
     title: 'Camera',
     headerStyle: {
@@ -23,6 +25,10 @@ export default class BrowseScreen extends Component {
     cameraBack: true,
     cameraFlash: false,
   };
+
+  componentWillUnmount() {
+    this.forceUpdate();
+  }
 
   toggleType = () => {
     this.setState(prevState => ({
@@ -46,6 +52,12 @@ export default class BrowseScreen extends Component {
 
   render() {
     const { cameraBack, cameraFlash } = this.state;
+    const { isFocused } = this.props;
+
+    if (!isFocused) {
+      return <View />;
+    }
+
     return (
       <View style={styles.container}>
         <RNCamera
@@ -109,3 +121,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+export default withNavigationFocus(CameraScreen);
+
+CameraScreen.propTypes = {
+  isFocused: PropTypes.func.isRequired,
+};

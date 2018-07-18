@@ -50,7 +50,7 @@ export default class PhotosScreen extends Component {
         }}
       >
         <Ionicons
-          name={Platform.OS === 'ios' ? 'ios-refresh-circle' : 'md-refresh-camera'}
+          name={Platform.OS === 'ios' ? 'ios-refresh-circle' : 'md-refresh-circle'}
           size={25}
           color="white"
           style={styles.refresh}
