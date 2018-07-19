@@ -125,5 +125,5 @@ const styles = StyleSheet.create({
 export default withNavigationFocus(CameraScreen);
 
 CameraScreen.propTypes = {
-  isFocused: PropTypes.func.isRequired,
+  isFocused: PropTypes.bool.isRequired,
 };
