@@ -51,7 +51,7 @@ https://aws.amazon.com/free/
 
 ![awsmobile2](https://user-images.githubusercontent.com/14052885/41520984-b04a9234-7313-11e8-9d6e-ead22f033725.jpeg)
 
-`awsmobile user-signin enable`  
+`awsmobile user-files enable`  
 `awsmobile push`  
 `awsmobile console` (opens the aws console in browser)
 
@@ -59,13 +59,53 @@ This project's source directory is 'app'.
 
 ### AWS S3 setup:
 
+Go to S3 and find your AWS S3 bucket (exact name can be seen in the aws-exports file). Select 'Permissions' and update the Bucket and CORS policy.
+
 #### Bucket policy:
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AddPerm",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": [
+                "arn:aws:s3:::{your-bucket-name}/*",
+                "arn:aws:s3:::{your-bucket-name}"
+            ]
+        }
+    ]
+}
+```
 
 #### CORS configuration:
 
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+<CORSRule>
+    <AllowedOrigin>*</AllowedOrigin>
+    <AllowedMethod>HEAD</AllowedMethod>
+    <AllowedMethod>GET</AllowedMethod>
+    <AllowedMethod>PUT</AllowedMethod>
+    <AllowedMethod>POST</AllowedMethod>
+    <AllowedMethod>DELETE</AllowedMethod>
+    <MaxAgeSeconds>3000</MaxAgeSeconds>
+    <ExposeHeader>x-amz-server-side-encryption</ExposeHeader>
+    <ExposeHeader>x-amz-request-id</ExposeHeader>
+    <ExposeHeader>x-amz-id-2</ExposeHeader>
+    <ExposeHeader>ETag</ExposeHeader>
+    <AllowedHeader>*</AllowedHeader>
+</CORSRule>
+</CORSConfiguration>
+```
+
 ### Launch
 
-Connect your hardware device via USB to use Camera.
+Connect your hardware device via USB.
 
 Run on ios:
 `react-native run-ios --device "iPhone"`  

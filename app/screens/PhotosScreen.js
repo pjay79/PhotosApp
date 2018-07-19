@@ -122,8 +122,8 @@ export default class PhotosScreen extends Component {
   uploadPhoto = () => {
     const { photos, index } = this.state;
     if (index !== null) {
-      const { uri } = photos[index].node.image;
-      const filename = `${new Date()}.jpg`;
+      const { uri, filename } = photos[index].node.image;
+      // const filename = `${new Date()}.jpg`;
       this.uploadPhotoToS3(uri, filename);
     } else {
       Alert.alert(
