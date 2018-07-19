@@ -122,7 +122,8 @@ export default class PhotosScreen extends Component {
   uploadPhoto = () => {
     const { photos, index } = this.state;
     if (index !== null) {
-      const { uri, filename } = photos[index].node.image;
+      const { uri } = photos[index].node.image;
+      const filename = `${new Date()}.jpg`;
       this.uploadPhotoToS3(uri, filename);
     } else {
       Alert.alert(
@@ -143,6 +144,7 @@ export default class PhotosScreen extends Component {
         contentType: 'image/jpeg',
       });
       this.setState({ uploading: false });
+      console.log('Photo uploaded!');
     } catch (error) {
       this.setState({ uploading: false });
       console.log(error.message);

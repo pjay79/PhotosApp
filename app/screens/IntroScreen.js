@@ -11,7 +11,7 @@ const slides = [
     title: 'Share Photos',
     text: 'Share on social media.',
     image: require('../assets/images/share.png'),
-    imageStyle: { height: 240, width: 240 },
+    imageStyle: { height: 180, width: 180 },
     backgroundColor: '#F0353D',
   },
   {
@@ -19,7 +19,7 @@ const slides = [
     title: 'Upload Photos',
     text: 'Upload to Amazon S3 cloud storage.',
     image: require('../assets/images/upload.png'),
-    imageStyle: { height: 240, width: 240 },
+    imageStyle: { height: 180, width: 180 },
     backgroundColor: '#F0353D',
   },
 ];
@@ -44,19 +44,14 @@ class IntroScreen extends Component {
         name="md-arrow-round-forward"
         color="rgba(255, 255, 255, .9)"
         size={24}
-        style={{ backgroundColor: 'transparent' }}
+        style={styles.icon}
       />
     </View>
   );
 
   renderDoneButton = () => (
     <View style={styles.buttonCircle}>
-      <Ionicons
-        name="md-checkmark"
-        color="rgba(255, 255, 255, .9)"
-        size={24}
-        style={{ backgroundColor: 'transparent' }}
-      />
+      <Ionicons name="md-checkmark" color="rgba(255, 255, 255, .9)" size={24} style={styles.icon} />
     </View>
   );
 
@@ -89,9 +84,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  image: {
-    width: 320,
-    height: 320,
+  icon: {
+    backgroundColor: 'transparent',
   },
 });
 
