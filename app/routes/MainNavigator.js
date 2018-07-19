@@ -9,8 +9,8 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
-// import LoadingScreen from '../screens/LoadingScreen';
-// import IntroScreen from '../screens/IntroScreen';
+import LoadingScreen from '../screens/LoadingScreen';
+import IntroScreen from '../screens/IntroScreen';
 import HomeScreen from '../screens/HomeScreen';
 import PhotosScreen from '../screens/PhotosScreen';
 import CameraScreen from '../screens/CameraScreen';
@@ -124,13 +124,13 @@ const AppStack = createStackNavigator(
 
 export default createSwitchNavigator(
   {
-    // Loading: LoadingScreen,
-    // Intro: IntroScreen,
+    Loading: LoadingScreen,
+    Intro: IntroScreen,
     Auth: AuthStack,
     App: AppStack,
   },
   {
-    initialRouteName: 'Auth',
+    initialRouteName: 'Loading',
   },
 );
 
