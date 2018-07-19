@@ -140,7 +140,7 @@ export default class PhotosScreen extends Component {
       this.setState({ uploading: true });
       const file = await RNFetchBlob.fs.readFile(uri, 'base64');
       const buffer = await Buffer.from(file, 'base64');
-      Storage.put(key, buffer, {
+      await Storage.put(key, buffer, {
         contentType: 'image/jpeg',
       });
       this.setState({ uploading: false });
