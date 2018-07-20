@@ -2,7 +2,7 @@
 
 React Native, AWS Amplify, AWS S3. Plus Mobile Analytics with Pinpoint. Please note: this is a work still in progress, and many features are not fully developed yet.
 
-<img width="674" alt="photos-screenflow" src="https://user-images.githubusercontent.com/14052885/42986266-3f1cee3e-8c38-11e8-847f-86d9c7aff1f3.png">
+<img width="1348" alt="photos-screenflow" src="https://user-images.githubusercontent.com/14052885/42986266-3f1cee3e-8c38-11e8-847f-86d9c7aff1f3.png">
 
 ## Screenshots
 
@@ -16,7 +16,7 @@ React Native, AWS Amplify, AWS S3. Plus Mobile Analytics with Pinpoint. Please n
 ![img_2415](https://user-images.githubusercontent.com/14052885/42982759-3076d05a-8c26-11e8-9124-4ae48fd23ca6.PNG)
 ![img_2437](https://user-images.githubusercontent.com/14052885/42982764-3160392a-8c26-11e8-9681-50b319c626f2.PNG)
 ![img_2441](https://user-images.githubusercontent.com/14052885/42983720-8b864ec6-8c2b-11e8-9f5f-5bb456b8d4a8.PNG)
-![img_2416](https://user-images.githubusercontent.com/14052885/42982760-30abb6ee-8c26-11e8-998e-957ce852c66c.PNG)
+![img_2445](https://user-images.githubusercontent.com/14052885/42995128-65b4a3aa-8c53-11e8-9d38-62f9a0cf48a3.PNG)
 ![img_2438](https://user-images.githubusercontent.com/14052885/42982766-31e0a286-8c26-11e8-8ba7-a66afdb30ceb.PNG)
 
 ## Technology stack:
