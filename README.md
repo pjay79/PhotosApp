@@ -2,6 +2,8 @@
 
 React Native, AWS Amplify, AWS S3. Plus Mobile Analytics with Pinpoint. Please note: this is a work still in progress, and many features are not fully developed yet.
 
+<img width="674" alt="photos-screenflow" src="https://user-images.githubusercontent.com/14052885/42986266-3f1cee3e-8c38-11e8-847f-86d9c7aff1f3.png">
+
 ## Screenshots
 
 ### iOS
