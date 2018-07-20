@@ -121,7 +121,9 @@ Go to S3 and find your AWS S3 bucket (exact name can be seen in the aws-exports 
 
 ### AWS Analytics:
 
-Select 'Mobile Analytics' in the AWS Services section.
+Select 'Mobile Analytics' in the AWS Services section. Check the Region Table to make sure Pinpoint is available in your country.
+
+https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/
 
 ### Launch
 
