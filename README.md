@@ -34,7 +34,10 @@ React Native, AWS Amplify, AWS S3. Plus Mobile Analytics with Pinpoint. Please n
 
 ### React Native setup:
 
-`brew install node`  
+`brew install node`
+
+This project is running with Node version 10.6.0.
+
 `brew install watchman`  
 `npm install -g react-native-cli`
 
