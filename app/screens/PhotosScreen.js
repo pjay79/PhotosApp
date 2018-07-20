@@ -127,7 +127,7 @@ export default class PhotosScreen extends Component {
     if (index !== null) {
       const { uri } = photos[index].node.image;
       const filenameiOS = photos[index].node.image.filename;
-      const filenameAndroid = `${new Date()}.jpg`;
+      const filenameAndroid = RNFetchBlob.wrap(uri);
       this.uploadPhotoToS3(uri, Platform.OS === 'ios' ? filenameiOS : filenameAndroid);
     } else {
       Alert.alert(

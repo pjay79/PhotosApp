@@ -24,7 +24,7 @@ const slides = [
   },
 ];
 
-class IntroScreen extends Component {
+export default class IntroScreen extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -94,5 +94,3 @@ IntroScreen.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-export default IntroScreen;

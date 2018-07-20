@@ -4,7 +4,7 @@ import {
   View, ActivityIndicator, StyleSheet, AsyncStorage,
 } from 'react-native';
 
-class LoadingScreen extends Component {
+export default class LoadingScreen extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -46,5 +46,3 @@ LoadingScreen.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-export default LoadingScreen;
