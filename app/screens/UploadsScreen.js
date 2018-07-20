@@ -13,7 +13,7 @@ import {
   Dimensions,
   CameraRoll,
 } from 'react-native';
-import { Storage } from 'aws-amplify';
+import { Storage, Analytics } from 'aws-amplify';
 import Share from 'react-native-share';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import s3Url from '../config/s3Url';
@@ -83,21 +83,6 @@ export default class UploadsScreen extends Component {
     }
   };
 
-  downloadPhoto = () => {
-    const { uploads, index } = this.state;
-    if (index !== null) {
-      const uri = s3Url + uploads[index].key;
-      CameraRoll.saveToCameraRoll(uri);
-    } else {
-      Alert.alert(
-        'Oops',
-        'Please select a photo',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false },
-      );
-    }
-  };
-
   sharePhoto = () => {
     const { uploads, index } = this.state;
     if (index !== null) {
@@ -109,8 +94,27 @@ export default class UploadsScreen extends Component {
         subject: 'Powered by AWS Amplify & Amazon S3.',
       };
       Share.open(shareOptions)
-        .then(result => console.log(result))
+        .then((result) => {
+          Analytics.record({ name: 's3PhotoShared' });
+          console.log(result);
+        })
         .catch(error => console.log(error.message));
+    } else {
+      Alert.alert(
+        'Oops',
+        'Please select a photo',
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false },
+      );
+    }
+  };
+
+  downloadPhoto = () => {
+    const { uploads, index } = this.state;
+    if (index !== null) {
+      const uri = s3Url + uploads[index].key;
+      CameraRoll.saveToCameraRoll(uri);
+      Analytics.record({ name: 's3PhotoDownloaded' });
     } else {
       Alert.alert(
         'Oops',

@@ -13,7 +13,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { Storage } from 'aws-amplify';
+import { Storage, Analytics } from 'aws-amplify';
 import Share from 'react-native-share';
 import RNFetchBlob from 'rn-fetch-blob';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -106,7 +106,10 @@ export default class PhotosScreen extends Component {
           subject: 'Powered by AWS Amplify & Amazon S3.',
         };
         Share.open(shareOptions)
-          .then(result => console.log(result))
+          .then((result) => {
+            console.log(result);
+            Analytics.record({ name: 'cameraPhotoShared' });
+          })
           .catch(error => console.log(error.message));
       });
     } else {
@@ -119,12 +122,13 @@ export default class PhotosScreen extends Component {
     }
   };
 
-  uploadPhoto = () => {
+  uploadPhoto = async () => {
     const { photos, index } = this.state;
     if (index !== null) {
-      const { uri, filename } = photos[index].node.image;
-      // const filename = `${new Date()}.jpg`;
-      this.uploadPhotoToS3(uri, filename);
+      const { uri } = photos[index].node.image;
+      const filenameiOS = photos[index].node.image.filename;
+      const filenameAndroid = `${new Date()}.jpg`;
+      this.uploadPhotoToS3(uri, Platform.OS === 'ios' ? filenameiOS : filenameAndroid);
     } else {
       Alert.alert(
         'Oops',
@@ -144,6 +148,7 @@ export default class PhotosScreen extends Component {
         contentType: 'image/jpeg',
       });
       this.setState({ uploading: false });
+      Analytics.record({ name: 'cameraPhotoUploaded' });
       console.log('Photo uploaded!');
     } catch (error) {
       this.setState({ uploading: false });

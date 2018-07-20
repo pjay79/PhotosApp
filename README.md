@@ -1,10 +1,20 @@
 # PhotosApp
 
-React Native, AWS Amplify, AWS S3. Please note: this is a work still in progress, and many features are not fully developed yet.
+React Native, AWS Amplify, AWS S3. Plus Mobile Analytics with Pinpoint. Please note: this is a work still in progress, and many features are not fully developed yet.
 
 ## Screenshots
 
 ### iOS
+
+![img_2410](https://user-images.githubusercontent.com/14052885/42982756-2fab57e0-8c26-11e8-8e7e-e750ed2d0d0d.PNG)
+![img_2439](https://user-images.githubusercontent.com/14052885/42982767-32693f60-8c26-11e8-82f7-09196775968e.PNG)
+![img_2411](https://user-images.githubusercontent.com/14052885/42982757-2ff3ace8-8c26-11e8-84a8-bd071cd96100.PNG)
+![img_2413](https://user-images.githubusercontent.com/14052885/42982758-302d0754-8c26-11e8-83c5-dc580f1e8a35.PNG)
+![img_2419](https://user-images.githubusercontent.com/14052885/42982762-310ed9ea-8c26-11e8-934d-ea7d9c84de2f.PNG)
+![img_2415](https://user-images.githubusercontent.com/14052885/42982759-3076d05a-8c26-11e8-9124-4ae48fd23ca6.PNG)
+![img_2437](https://user-images.githubusercontent.com/14052885/42982764-3160392a-8c26-11e8-9681-50b319c626f2.PNG)
+![img_2416](https://user-images.githubusercontent.com/14052885/42982760-30abb6ee-8c26-11e8-998e-957ce852c66c.PNG)
+![img_2438](https://user-images.githubusercontent.com/14052885/42982766-31e0a286-8c26-11e8-8ba7-a66afdb30ceb.PNG)
 
 ## Technology stack:
 
@@ -102,6 +112,10 @@ Go to S3 and find your AWS S3 bucket (exact name can be seen in the aws-exports 
 </CORSRule>
 </CORSConfiguration>
 ```
+
+### AWS Analytics:
+
+Select 'Mobile Analytics' in the AWS Services section.
 
 ### Launch
 
